@@ -1,0 +1,28 @@
+type ARECBank @entity {
+  id:                     ID!
+  numARTTokens:           Int!
+  ARTTokens:              [Bytes!]!
+}
+
+type ARTToken @entity {
+  id:                     ID!
+  numPaymentToken:        Int!
+  totalAmountDeposit:     BigInt!
+  totalAmountSold:        BigInt!
+  paymentTokens:          [Bytes!]!
+}
+
+type ARTTokenSales @entity {
+  id:                     ID!
+  salePrices:             BigInt!
+  saleIncomes:            BigInt!
+  withdrawValues:         BigInt!
+}
+
+type Token @entity {
+  id: ID!
+  symbol:                 String!
+  name:                   String!
+  decimals:               BigInt!
+  totalSupply:            BigInt!
+}

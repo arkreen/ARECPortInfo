@@ -1,0 +1,23 @@
+{
+  "name": "arec_port_info",
+  "version": "0.1.0",
+  "repository": "https://github.com/arkreen/GreenBTCGraph",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "codegen": "graph codegen --output-dir src/types/",
+    "build": "graph build",
+    "deploy": "graph deploy --product hosted-service ldru/green-btc"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.24.0",
+    "@graphprotocol/graph-ts": "^0.24.0",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "eslint": "^6.2.2",
+    "eslint-config-prettier": "^6.1.0",
+    "prettier": "^1.18.2",
+    "typescript": "^3.5.2",
+    "@types/luxon": "^1.24.4",
+    "luxon": "^1.25.0"
+  }
+}
