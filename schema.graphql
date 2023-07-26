@@ -12,15 +12,16 @@ type ARTToken @entity {
   paymentTokens:          [Bytes!]!
 }
 
-type ARTTokenSales @entity {
+type ARTTokenSale @entity {
   id:                     ID!
   salePrices:             BigInt!
+  timesOfSale:            BigInt!
   saleIncomes:            BigInt!
   withdrawValues:         BigInt!
 }
 
 type Token @entity {
-  id: ID!
+  id:                     ID!
   symbol:                 String!
   name:                   String!
   decimals:               BigInt!

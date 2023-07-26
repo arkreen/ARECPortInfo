@@ -1,4 +1,4 @@
-specVersion: 0.1.0
+specVersion: 0.0.6
 description: Subgraph for AREC Port providing information of AREC ecosystem 
 repository: https://github.com/arkreen/ARECPortGraph
 schema:

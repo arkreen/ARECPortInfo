@@ -47,13 +47,13 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "payAmount",
+          "name": "artAmount",
           "type": "uint256"
         },
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "artAmount",
+          "name": "payAmount",
           "type": "uint256"
         }
       ],
