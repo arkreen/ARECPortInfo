@@ -1,5 +1,7 @@
 type ARECBank @entity {
   id:                     ID!
+  timeTrx:                String!
+  blockHeight:            String!
   numARTTokens:           Int!
   ARTTokens:              [Bytes!]!
 }

@@ -6,7 +6,7 @@
   "scripts": {
     "codegen": "graph codegen --output-dir src/types/",
     "build": "graph build",
-    "deploy": "graph deploy --product hosted-service ldru/green-btc"
+    "deploy": "graph deploy --product hosted-service lu-derik/arec-port"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.24.0",

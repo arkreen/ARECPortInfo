@@ -27,8 +27,11 @@ export function handleARTPriceChanged(event: ARTPriceChanged): void {
     ARECBank = new ARECBankType('ARECBank')
     ARECBank.numARTTokens = 0
     ARECBank.ARTTokens = []
-    ARECBank.save()
   }
+
+  ARECBank.timeTrx = event.block.timestamp.toString()
+  ARECBank.blockHeight = event.block.number.toString()
+  ARECBank.save()
 
   let ARTToken = ARTTokenType.load('ART-' + artTokenAddress)
   if (ARTToken === null) {
@@ -105,8 +108,11 @@ export function handleARTSold(event: ARTSold): void {
     ARECBank = new ARECBankType('ARECBank')
     ARECBank.numARTTokens = 0
     ARECBank.ARTTokens = []
-    ARECBank.save()
   }
+  
+  ARECBank.timeTrx = event.block.timestamp.toString()
+  ARECBank.blockHeight = event.block.number.toString()
+  ARECBank.save()
 
   let ARTToken = ARTTokenType.load('ART-' + artTokenAddress)
   if (ARTToken === null) {
@@ -202,6 +208,11 @@ export function handleWithdraw(event: Withdraw): void {
 
   ARTTokenSale.withdrawValues = ARTTokenSale.withdrawValues.plus(event.params.balance)
   ARTTokenSale.save()
+  
+  let ARECBank = ARECBankType.load('ARECBank')!
+  ARECBank.timeTrx = event.block.timestamp.toString()
+  ARECBank.blockHeight = event.block.number.toString()
+  ARECBank.save()
 }
 
 export function handleDeposit(event: Deposit): void {
@@ -216,4 +227,15 @@ export function handleDeposit(event: Deposit): void {
 
   ARTToken.totalAmountDeposit = ARTToken.totalAmountDeposit.plus(event.params.amountDeposit)
   ARTToken.save()
+
+  let ARECBank = ARECBankType.load('ARECBank')
+  if (ARECBank === null) {
+    ARECBank = new ARECBankType('ARECBank')
+    ARECBank.numARTTokens = 0
+    ARECBank.ARTTokens = []
+  }
+
+  ARECBank.timeTrx = event.block.timestamp.toString()
+  ARECBank.blockHeight = event.block.number.toString()
+  ARECBank.save()
 }
