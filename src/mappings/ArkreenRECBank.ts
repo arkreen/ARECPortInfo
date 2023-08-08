@@ -41,23 +41,7 @@ export function handleARTPriceChanged(event: ARTPriceChanged): void {
     ARTToken.totalAmountSold = ZERO_BI
     ARTToken.paymentTokens = []
     ARTToken.save()
-  }
 
-  let ARTTokenSale = ARTTokenSaleType.load(ARTTokenSalesID)
-  if (ARTTokenSale === null) {
-    ARTTokenSale = new ARTTokenSaleType(ARTTokenSalesID)
-    ARTTokenSale.salePrices = ZERO_BI
-    ARTTokenSale.timesOfSale = ZERO_BI
-    ARTTokenSale.saleIncomes = ZERO_BI
-    ARTTokenSale.withdrawValues = ZERO_BI
-    ARTTokenSale.save()
-  }
- 
-  let i: i32
-  for (i =0; i < ARECBank.numARTTokens; i++) {
-    if (ARECBank.ARTTokens[i] === event.params.artToken) break
-  }
-  if(i === ARECBank.numARTTokens) {
     let ARTTokens = ARECBank.ARTTokens
     ARECBank.numARTTokens = ARECBank.numARTTokens + 1
     ARTTokens.push(event.params.artToken)
@@ -72,10 +56,15 @@ export function handleARTPriceChanged(event: ARTPriceChanged): void {
     artToken.save()
   }
 
-  for (i= 0; i < ARTToken.numPaymentToken; i++) {
-    if (ARTToken.paymentTokens[i] === event.params.payToken) break
-  }
-  if(i === ARTToken.numPaymentToken) {
+  let ARTTokenSale = ARTTokenSaleType.load(ARTTokenSalesID)
+  if (ARTTokenSale === null) {
+    ARTTokenSale = new ARTTokenSaleType(ARTTokenSalesID)
+    ARTTokenSale.salePrices = ZERO_BI
+    ARTTokenSale.timesOfSale = ZERO_BI
+    ARTTokenSale.saleIncomes = ZERO_BI
+    ARTTokenSale.withdrawValues = ZERO_BI
+    ARTTokenSale.save()
+
     let paymentTokens = ARTToken.paymentTokens
     ARTToken.numPaymentToken = ARTToken.numPaymentToken + 1
     paymentTokens.push(event.params.payToken)
@@ -89,7 +78,7 @@ export function handleARTPriceChanged(event: ARTPriceChanged): void {
     paymentToken.totalSupply = fetchTokenTotalSupply(event.params.payToken)
     paymentToken.save()
   }
-
+ 
   ARTTokenSale.salePrices = event.params.newPrice
   ARTTokenSale.save()
 }
@@ -114,6 +103,7 @@ export function handleARTSold(event: ARTSold): void {
   ARECBank.blockHeight = event.block.number.toString()
   ARECBank.save()
 
+  // To be compliant with early version only with ARTSold event
   let ARTToken = ARTTokenType.load('ART-' + artTokenAddress)
   if (ARTToken === null) {
     ARTToken = new ARTTokenType('ART-' + artTokenAddress)
