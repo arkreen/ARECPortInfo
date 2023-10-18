@@ -15,3 +15,5 @@
 `graph deploy --product hosted-service lu-derik/arec-port`
 
 `npx graph deploy --product hosted-service lu-derik/arec-port`
+
+`npx graph deploy --product hosted-service lu-derik/arec-port-celo`
