@@ -8,9 +8,9 @@ dataSources:
     name: ArkreenRECBank
     network: matic
     source:
-      address: '0xab65900A52f1DcB722CaB2e5342bB6b128630A28'
+      address: '0x815bFE3aaCF765c9E0A4DdEb98Ad710a4Fb860d3'
       abi: ArkreenRECBank
-      startBlock: 41157616
+      startBlock: 22230877
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
