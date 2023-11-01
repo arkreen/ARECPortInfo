@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: ArkreenRECBank
-    network: mumbai
+    network: matic
     source:
-      address: '0x7ee6D2A14d6Db71339a010d44793B27895B36d50'
+      address: '0xab65900A52f1DcB722CaB2e5342bB6b128630A28'
       abi: ArkreenRECBank
-      startBlock: 33097497
+      startBlock: 41157616
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

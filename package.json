@@ -6,7 +6,9 @@
   "scripts": {
     "codegen": "graph codegen --output-dir src/types/",
     "build": "graph build",
-    "deploy": "graph deploy --product hosted-service lu-derik/arec-port"
+    "deploy": "graph deploy --product hosted-service lu-derik/arec-port",
+    "deploy:celo": "npx graph deploy --product hosted-service lu-derik/arec-port-celo",
+    "deploy:matic": "npx graph deploy --product hosted-service lu-derik/arec-port-matic"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.24.0",
