@@ -6,7 +6,7 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: ArkreenRECBank
-    network: matic
+    network: celo
     source:
       address: '0x815bFE3aaCF765c9E0A4DdEb98Ad710a4Fb860d3'
       abi: ArkreenRECBank
