@@ -12,8 +12,8 @@ export let ONE_BD = BigDecimal.fromString('1')
 export let BI_18 = BigInt.fromI32(18)
 
 const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
-const ADDRESS_NATIVE = '0x9c3c9283d3e44854697cd22d3faa240cfb032889'
-const ADDRESS_BANK = '0x7ee6d2a14d6db71339a010d44793b27895b36d50'       // Simu env
+const ADDRESS_NATIVE = '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270'
+const ADDRESS_BANK = '0xab65900A52f1DcB722CaB2e5342bB6b128630A28'       // Polygon mainnet
 const BLOCK_HEIGHT_SYNC = BigInt.fromI32(36548131)                      // Block height to sync price and deposit
 
 export function handleARTPriceChanged(event: ARTPriceChanged): void {
@@ -172,7 +172,7 @@ export function handleARTSold(event: ARTSold): void {
     }
   }
 
-  if (ARTToken.totalAmountDeposit.equals(ZERO_BI) && event.block.number.equals(BLOCK_HEIGHT_SYNC)) {
+  if (ARTToken.totalAmountDeposit.equals(ZERO_BI)) {
     let arkreenRECBank = ArkreenRECBank.bind(Address.fromString(ADDRESS_BANK))
     let artSaleInfo = arkreenRECBank.try_artSaleInfo(event.params.artToken)
     if (!artSaleInfo.reverted) {
