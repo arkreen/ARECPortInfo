@@ -29,3 +29,32 @@ type Token @entity {
   decimals:               BigInt!
   totalSupply:            BigInt!
 }
+
+type PlantStakeInfo @entity {
+  id:                     ID!
+  stakeUserCounter:       Int!
+  stakeTxCounter:         Int!
+  allStakeAmount:         BigInt!
+  allRewardAmount:        BigInt!
+}
+
+type PlantStakeUser @entity {
+  id:                     ID!
+  stakeTxCounter:         Int!
+  allStakeAmount:         BigInt!
+  allRewardAmount:        BigInt!
+}
+
+type PlantStakeTx @entity {
+  id:                     ID!
+  stakeTxSN:              Int!
+  hashTx:                 Bytes!
+  staker:                 String!
+  nonce:                  Int!
+  stakeType:              String!
+  txid:                   String!
+  cspMiner:               String!
+  amount:                 BigInt!
+  reward:                 BigInt!
+}
+

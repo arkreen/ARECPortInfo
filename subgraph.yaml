@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: ArkreenRECBank
-    network: mumbai
+    network: polygon-amoy
     source:
-      address: '0x9e1dde2912a804e39e5b19c8b670a6cee0b1ca7a'
+      address: '0xf9aAcFf1B292F82b60662e47610C570ef58d3c70'
       abi: ArkreenRECBank
-      startBlock: 43487809
+      startBlock: 5923215
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -34,4 +34,27 @@ dataSources:
           handler: handleWithdraw    
         - event: Deposit(indexed address,uint256)
           handler: handleDeposit   
-   
+  - kind: ethereum/contract
+    name: PlantStaking
+    network: polygon-amoy
+    source:
+      address: '0x95f8e80e11593DAE019EBa1BF81a8b38e3294325'
+      abi: PlantStaking
+      startBlock: 7103862
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/PlantStaking.ts
+      entities:
+        - PlantStakeInfo
+        - PlantStakeUser
+        - PlantStakeTx
+      abis:
+        - name: PlantStaking
+          file: ./abis/PlantStaking.json
+      eventHandlers:
+        - event: Stake(indexed uint256,indexed address,address,uint256)
+          handler: handleStake    
+        - event: Unstake(indexed uint256,indexed address,address,uint256,uint256)
+          handler: handleUnStakeWithReward
