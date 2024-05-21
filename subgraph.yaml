@@ -38,9 +38,9 @@ dataSources:
     name: PlantStaking
     network: polygon-amoy
     source:
-      address: '0x95f8e80e11593DAE019EBa1BF81a8b38e3294325'
+      address: '0xf37C7c9F57D0ae52177B10fbf25F74fCb1Cc0447'
       abi: PlantStaking
-      startBlock: 7103862
+      startBlock: 7279154
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

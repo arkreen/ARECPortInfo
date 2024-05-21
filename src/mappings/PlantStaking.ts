@@ -29,14 +29,15 @@ export function handleStake(event: Stake): void {
     plantStakeUser.save()
 
     plantStakeInfo.stakeUserCounter = plantStakeInfo.stakeUserCounter + 1
-    plantStakeInfo.stakeTxCounter = plantStakeInfo.stakeTxCounter + 1
-    plantStakeInfo.allStakeAmount = plantStakeInfo.allStakeAmount.plus(event.params.amount)
     plantStakeInfo.save()
   }
 
+  plantStakeInfo.stakeTxCounter = plantStakeInfo.stakeTxCounter + 1
+  plantStakeInfo.allStakeAmount = plantStakeInfo.allStakeAmount.plus(event.params.amount)
+  plantStakeInfo.save()
+
   let plantStakeTx = new PlantStakeTx(event.transaction.hash.toHexString())
   plantStakeTx.stakeTxSN = plantStakeInfo.stakeTxCounter
-  plantStakeTx.hashTx = event.transaction.hash
   plantStakeTx.staker = event.params.staker.toHexString()
   plantStakeTx.nonce = plantStakeUser.stakeTxCounter
   plantStakeTx.stakeType = "Stake"
@@ -65,7 +66,6 @@ export function handleUnStakeWithReward(event: Unstake): void {
 
   let plantStakeTx = new PlantStakeTx(event.transaction.hash.toHexString())
   plantStakeTx.stakeTxSN = plantStakeInfo.stakeTxCounter
-  plantStakeTx.hashTx = event.transaction.hash
   plantStakeTx.staker = event.params.staker.toHexString()
   plantStakeTx.nonce = plantStakeUser.stakeTxCounter
   plantStakeTx.stakeType = "Unstake"

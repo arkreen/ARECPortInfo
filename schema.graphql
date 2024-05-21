@@ -48,7 +48,6 @@ type PlantStakeUser @entity {
 type PlantStakeTx @entity {
   id:                     ID!
   stakeTxSN:              Int!
-  hashTx:                 Bytes!
   staker:                 String!
   nonce:                  Int!
   stakeType:              String!
