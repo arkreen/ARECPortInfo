@@ -74,6 +74,18 @@
         {
           "indexed": false,
           "internalType": "uint256",
+          "name": "startTime",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "endTime",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
           "name": "reward",
           "type": "uint256"
         }
@@ -248,11 +260,103 @@
     },
     {
       "inputs": [],
+      "name": "getBasicStakeStatus",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "startTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "endTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "allMiners",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "allStakes",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "allNormalStakes",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "allBoostStakes",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "capMinerBoost",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rateBoost",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rewardPerStake",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "getRewardForDuration",
       "outputs": [
         {
           "internalType": "uint256",
           "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "getUserStakeStatus",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "userMiners",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "userStakes",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "userNormalStakes",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "userBoostStakes",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "userRewards",
           "type": "uint256"
         }
       ],
