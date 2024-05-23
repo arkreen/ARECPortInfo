@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: ArkreenRECBank
-    network: celo
+    network: polygon-amoy
     source:
-      address: '0x815bFE3aaCF765c9E0A4DdEb98Ad710a4Fb860d3'
+      address: '0xf9aAcFf1B292F82b60662e47610C570ef58d3c70'
       abi: ArkreenRECBank
-      startBlock: 22230877
+      startBlock: 5923215
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
