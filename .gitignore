@@ -3,4 +3,5 @@ node_modules/
 src/types/
 .DS_STORE
 .vscode
+.temp
 yarn-error.log

@@ -36,7 +36,7 @@ dataSources:
           handler: handleDeposit   
   - kind: ethereum/contract
     name: PlantStaking
-    network: polygon-amoy
+    network: matic
     source:
       address: '0xD16457cD8b1a0ac6f7F3dFFdaA610B038Cf91579'
       abi: PlantStaking

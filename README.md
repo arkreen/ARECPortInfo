@@ -28,3 +28,4 @@ For Polygon Amoy Testnet:
 
 For Polygon Mainnet:
 `npx graph deploy --product hosted-service lu-derik/arec-port-matic`
+`npx graph deploy --studio arec-port-polygon`
