@@ -29,3 +29,62 @@ type Token @entity {
   decimals:               BigInt!
   totalSupply:            BigInt!
 }
+
+type PlantStakeInfo @entity {
+  id:                     ID!
+  stakeUserCounter:       Int!
+  stakeTxCounter:         Int!
+  allStakeAmount:         BigInt!
+  allRewardAmount:        BigInt!
+}
+
+type PlantStakeUser @entity {
+  id:                     ID!
+  stakeTxCounter:         Int!
+  allStakeAmount:         BigInt!
+  allRewardAmount:        BigInt!
+}
+
+type PlantStakeTx @entity {
+  id:                     ID!
+  stakeTxSN:              Int!
+  staker:                 String!
+  nonce:                  Int!
+  stakeType:              String!
+  txid:                   String!
+  cspMiner:               String!
+  amount:                 BigInt!
+  reward:                 BigInt!
+}
+
+type StakingRewardsInfo @entity {
+  id:                     ID!
+  periodStart:            Int!
+  periodEnd:              Int!
+  lastUpdateTime:         Int!
+  lastBlockHeight:        BigInt!
+  totalStakes:            BigInt!
+  totalRewardStakes:      BigInt!
+  totalNormalStakes:      BigInt!
+  totalBoostStakes:       BigInt!
+  rewardRate:             BigInt!
+  rewardPerStakeLast:     BigInt!
+  capMinerBoost:          BigInt!
+  rateBoost:              Int!
+  minerStaked:            Int!
+  stakeCounter:           Int!
+  unstakeCounter:         Int!
+}
+
+type StakingRewardsUser @entity {
+  id:                     ID!
+  lastTimeUser:           Int!
+  lastBlockHeightUser:    BigInt!
+  totalStakesUser:        BigInt!
+  totalRewardStakesUser:  BigInt!
+  totalNormalStakesUser:  BigInt!
+  totalBoostStakesUser:   BigInt!
+  minerStakedUser:        Int!
+  stakeCounterUser:       Int!
+  unstakeCounterUser:     Int!
+}

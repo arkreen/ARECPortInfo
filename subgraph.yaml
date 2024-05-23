@@ -34,4 +34,27 @@ dataSources:
           handler: handleWithdraw    
         - event: Deposit(indexed address,uint256)
           handler: handleDeposit   
-   
+  - kind: ethereum/contract
+    name: PlantStaking
+    network: polygon-amoy
+    source:
+      address: '0xD16457cD8b1a0ac6f7F3dFFdaA610B038Cf91579'
+      abi: PlantStaking
+      startBlock: 57293653
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/PlantStaking.ts
+      entities:
+        - PlantStakeInfo
+        - PlantStakeUser
+        - PlantStakeTx
+      abis:
+        - name: PlantStaking
+          file: ./abis/PlantStaking.json
+      eventHandlers:
+        - event: Stake(indexed uint256,indexed address,address,uint256)
+          handler: handleStake    
+        - event: Unstake(indexed uint256,indexed address,address,uint256,uint256)
+          handler: handleUnStakeWithReward

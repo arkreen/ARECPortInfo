@@ -23,5 +23,8 @@ For Celo Test Net:
 For Polygon Mummai Testnet:
 `npx graph deploy --product hosted-service lu-derik/arec-port`
 
+For Polygon Amoy Testnet:
+`npx graph deploy --studio arec-port-amoy-dev`
+
 For Polygon Mainnet:
 `npx graph deploy --product hosted-service lu-derik/arec-port-matic`
