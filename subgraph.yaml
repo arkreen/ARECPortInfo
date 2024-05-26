@@ -62,9 +62,9 @@ dataSources:
     name: StakingRewards
     network: polygon-amoy
     source:
-      address: '0x691938a6e88a85E66Aab05ECf84Fe84ECE8351C9'
+      address: '0xe233f1aC801eD919A774295503eCFE359A647B8B'
       abi: StakingRewards
-      startBlock: 7104535
+      startBlock: 7352470
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -83,3 +83,9 @@ dataSources:
           handler: handleWithdrawn
         - event: RewardPaid(indexed address,uint256)
           handler: handleStakeRewardPaid
+        - event: RewardStakeUpdated(indexed address,uint256,uint256,uint256)
+          handler: handleRewardStakeUpdated
+        - event: RewardAdded(uint256,uint256,uint256)
+          handler: handleRewardAdded
+        - event: SetStakeParameter(uint256,uint256)
+          handler: handleSetStakeParameter
