@@ -103,6 +103,7 @@ type StakeTransaction @entity {
   id:                     ID!
   user:                   String!
   type:                   String!
+  timeStamp:              BigInt!
   idTransaction:          BigInt!
   amountTransaction:      BigInt!
   totalStakes:            BigInt!

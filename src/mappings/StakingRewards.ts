@@ -72,6 +72,7 @@ export function handleStakeRewardPaid(event: RewardPaid): void {
   let stakeTransaction = new StakeTransaction(event.transaction.hash.toHexString())
   stakeTransaction.user = stakerUser
   stakeTransaction.type = "ClaimReward"
+  stakeTransaction.timeStamp = event.block.timestamp
 
   stakeTransaction.idTransaction = stakingRewardsInfo.counterTransaction
   stakeTransaction.amountTransaction =  event.params.reward
@@ -289,6 +290,7 @@ export function handleRewardStakeUpdated(event: RewardStakeUpdated): void {
   
   stakeTransaction.user = stakerUser
   stakeTransaction.type = "MinerOnboard"
+  stakeTransaction.timeStamp = event.block.timestamp
 
   stakeTransaction.idTransaction = stakingRewardsInfo.counterTransaction
   stakeTransaction.amountTransaction =  event.params.totalMiners
