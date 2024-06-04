@@ -1,4 +1,5 @@
-  [
+{ 
+  "abi": [
     {
       "inputs": [],
       "stateMutability": "nonpayable",
@@ -110,6 +111,56 @@
         }
       ],
       "name": "RewardPaid",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "totalMiners",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "userRewardStakes",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "totalRewardStakes",
+          "type": "uint256"
+        }
+      ],
+      "name": "RewardStakeUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newPremiumCap",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newPremiumRate",
+          "type": "uint256"
+        }
+      ],
+      "name": "SetStakeParameter",
       "type": "event"
     },
     {
@@ -304,6 +355,11 @@
         },
         {
           "internalType": "uint256",
+          "name": "rewardRateSecond",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
           "name": "rewardPerStake",
           "type": "uint256"
         }
@@ -357,6 +413,11 @@
         {
           "internalType": "uint256",
           "name": "userRewards",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "blockTime",
           "type": "uint256"
         }
       ],
@@ -816,3 +877,4 @@
       "type": "function"
     }
   ]
+}

@@ -59,10 +59,15 @@ type PlantStakeTx @entity {
 
 type StakingRewardsInfo @entity {
   id:                     ID!
-  periodStart:            Int!
-  periodEnd:              Int!
-  lastUpdateTime:         Int!
+  counterTransaction:     BigInt!
+  periodStart:            BigInt!
+  periodEnd:              BigInt!
+  totalReward:            BigInt!
+  lastUpdateTime:         BigInt!
   lastBlockHeight:        BigInt!
+  sumStakes:              BigInt!
+  sumUntakes:             BigInt!
+  sumRewards:             BigInt!
   totalStakes:            BigInt!
   totalRewardStakes:      BigInt!
   totalNormalStakes:      BigInt!
@@ -72,19 +77,42 @@ type StakingRewardsInfo @entity {
   capMinerBoost:          BigInt!
   rateBoost:              Int!
   minerStaked:            Int!
+  MinerTxCounter:         Int!
   stakeCounter:           Int!
   unstakeCounter:         Int!
+  rewardClaimCounter:     Int!
 }
 
 type StakingRewardsUser @entity {
   id:                     ID!
-  lastTimeUser:           Int!
+  lastTimeUser:           BigInt!
   lastBlockHeightUser:    BigInt!
+  sumRewards:             BigInt!
   totalStakesUser:        BigInt!
   totalRewardStakesUser:  BigInt!
   totalNormalStakesUser:  BigInt!
   totalBoostStakesUser:   BigInt!
   minerStakedUser:        Int!
+  MinerTxCounterUser:     Int!
   stakeCounterUser:       Int!
   unstakeCounterUser:     Int!
+  rewardClaimCounter:     Int!
+}
+
+type StakeTransaction @entity {
+  id:                     ID!
+  user:                   String!
+  type:                   String!
+  timeStamp:              BigInt!
+  idTransaction:          BigInt!
+  amountTransaction:      BigInt!
+  totalStakes:            BigInt!
+  totalRewardStakes:      BigInt!
+  totalNormalStakes:      BigInt!
+  totalBoostStakes:       BigInt!
+  minerStakedChange:      Int!
+  totalStakesUser:        BigInt!
+  totalRewardStakesUser:  BigInt!
+  totalNormalStakesUser:  BigInt!
+  totalBoostStakesUser:   BigInt!
 }
