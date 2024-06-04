@@ -34,6 +34,7 @@ type PlantStakeInfo @entity {
   id:                     ID!
   stakeUserCounter:       Int!
   stakeTxCounter:         Int!
+  unstakeTxCounter:       Int!
   stakingMinerCounter:    Int!
   allStakeAmount:         BigInt!
   allStakeSum:            BigInt!

@@ -14,6 +14,7 @@ export function handleStake(event: Stake): void {
     plantStakeInfo = new PlantStakeInfo("PlantStakeInfo")
     plantStakeInfo.stakeUserCounter = 0
     plantStakeInfo.stakeTxCounter = 0
+    plantStakeInfo.unstakeTxCounter = 0
     plantStakeInfo.stakingMinerCounter = 0
     plantStakeInfo.allStakeAmount = ZERO_BI
     plantStakeInfo.allStakeSum = ZERO_BI
@@ -27,6 +28,7 @@ export function handleStake(event: Stake): void {
   if (plantStakeUser === null) {
     plantStakeUser = new PlantStakeUser(stakerEntity)
     plantStakeUser.stakeTxCounter = 0 
+    plantStakeUser.unstakeTxCounter = 0 
     plantStakeUser.allStakeAmount = ZERO_BI
     plantStakeUser.allStakeSum = ZERO_BI
     plantStakeUser.allUnstakeSum = ZERO_BI
@@ -59,7 +61,7 @@ export function handleStake(event: Stake): void {
   plantStakeInfo.save()
 
   let plantStakeTx = new PlantStakeTx(event.transaction.hash.toHexString())
-  plantStakeTx.stakeTxSN = plantStakeInfo.stakeTxCounter
+  plantStakeTx.stakeTxSN = plantStakeInfo.stakeTxCounter + plantStakeInfo.unstakeTxCounter
   plantStakeTx.staker = event.params.staker.toHexString()
   plantStakeTx.nonce = plantStakeUser.stakeTxCounter + plantStakeUser.unstakeTxCounter
   plantStakeTx.stakeType = "Stake"
@@ -83,7 +85,7 @@ export function handleStake(event: Stake): void {
 // event Unstake(uint256 indexed txid, address indexed staker, address cspminer, uint256 amount, uint256 reward);
 export function handleUnStakeWithReward(event: Unstake): void {
   let plantStakeInfo = PlantStakeInfo.load("PlantStakeInfo")!
-  plantStakeInfo.stakeTxCounter = plantStakeInfo.stakeTxCounter + 1  
+  plantStakeInfo.unstakeTxCounter = plantStakeInfo.unstakeTxCounter + 1  
   plantStakeInfo.allStakeAmount = plantStakeInfo.allStakeAmount.minus(event.params.amount)
 
   plantStakeInfo.allUnstakeSum = plantStakeInfo.allUnstakeSum.plus(event.params.amount)
@@ -94,7 +96,7 @@ export function handleUnStakeWithReward(event: Unstake): void {
   let plantStakeUser = PlantStakeUser.load(stakerEntity)!
 
   let plantStakeTx = new PlantStakeTx(event.transaction.hash.toHexString())
-  plantStakeTx.stakeTxSN = plantStakeInfo.stakeTxCounter
+  plantStakeTx.stakeTxSN = plantStakeInfo.stakeTxCounter + plantStakeInfo.unstakeTxCounter
   plantStakeTx.staker = event.params.staker.toHexString()
   plantStakeTx.nonce = plantStakeUser.stakeTxCounter + plantStakeUser.unstakeTxCounter
   plantStakeTx.stakeType = "Unstake"
