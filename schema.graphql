@@ -34,14 +34,30 @@ type PlantStakeInfo @entity {
   id:                     ID!
   stakeUserCounter:       Int!
   stakeTxCounter:         Int!
+  stakingMinerCounter:    Int!
   allStakeAmount:         BigInt!
+  allStakeSum:            BigInt!
+  allUnstakeSum:           BigInt!
   allRewardAmount:        BigInt!
 }
 
 type PlantStakeUser @entity {
   id:                     ID!
   stakeTxCounter:         Int!
+  unstakeTxCounter:       Int!
   allStakeAmount:         BigInt!
+  allStakeSum:            BigInt!
+  allUnstakeSum:          BigInt!
+  allRewardAmount:        BigInt!
+}
+
+type PlantStakeMiner @entity {
+  id:                     ID!
+  stakeTxCounter:         Int!
+  unstakeTxCounter:       Int!
+  allStakeAmount:         BigInt!
+  allStakeSum:            BigInt!
+  allUnstakeSum:          BigInt!
   allRewardAmount:        BigInt!
 }
 

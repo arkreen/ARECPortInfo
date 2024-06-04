@@ -12,7 +12,8 @@
     "deploy:celo-mainnet": "npx graph deploy --product hosted-service lu-derik/arec-port-celo-mainnet",
     "deploy:mumbai-dev": "npx graph deploy --product hosted-service lu-derik/arec-port-mumbai-dev",
     "deploy:mumbai-dev-arkreen": "npx graph deploy --product hosted-service arkreen/mumbai-dev-arec-port",
-    "deploy:amoy-dev": "npx graph deploy --studio arec-port-amoy-dev"
+    "deploy:amoy-dev": "npx graph deploy --studio arec-port-amoy-dev",
+    "deploy:matic-Studio": "npx graph deploy --studio arec-port-polygon"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.70.0",
