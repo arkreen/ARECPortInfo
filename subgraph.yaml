@@ -38,9 +38,9 @@ dataSources:
     name: PlantStaking
     network: matic
     source:
-      address: '0xD16457cD8b1a0ac6f7F3dFFdaA610B038Cf91579'
+      address: '0xef3D3Cd3028DDff1fa795CFF8BC42B54a80Ee315'
       abi: PlantStaking
-      startBlock: 57293653
+      startBlock: 58096939
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
