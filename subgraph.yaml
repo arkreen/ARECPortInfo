@@ -73,6 +73,7 @@ dataSources:
       entities:
         - StakingRewardsInfo
         - StakingRewardsUser
+        - StakeTransaction
       abis:
         - name: StakingRewards
           file: ./abis/StakingRewards.json
@@ -89,3 +90,35 @@ dataSources:
           handler: handleRewardAdded
         - event: SetStakeParameter(uint256,uint256)
           handler: handleSetStakeParameter
+  - kind: ethereum/contract
+    name: StakingRewards1
+    network: matic
+    source:
+      address: '0xc1dCE2f17362C2De4ab4F104f6f88223e0c28B95'
+      abi: StakingRewards
+      startBlock: 58581370
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/StakingRewards1.ts
+      entities:
+        - StakingRewardsInfo1
+        - StakingRewardsUser1
+        - StakeTransaction1    
+      abis:
+        - name: StakingRewards
+          file: ./abis/StakingRewards.json
+      eventHandlers:
+        - event: Staked(indexed address,uint256)
+          handler: handleStake
+        - event: Withdrawn(indexed address,uint256)
+          handler: handleWithdrawn
+        - event: RewardPaid(indexed address,uint256)
+          handler: handleStakeRewardPaid
+        - event: RewardStakeUpdated(indexed address,uint256,uint256,uint256)
+          handler: handleRewardStakeUpdated
+        - event: RewardAdded(uint256,uint256,uint256)
+          handler: handleRewardAdded
+        - event: SetStakeParameter(uint256,uint256)
+          handler: handleSetStakeParameter          

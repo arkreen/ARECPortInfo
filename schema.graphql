@@ -133,3 +133,183 @@ type StakeTransaction @entity {
   totalNormalStakesUser:  BigInt!
   totalBoostStakesUser:   BigInt!
 }
+
+type StakingRewardsInfo1 @entity {
+  id:                     ID!
+  counterTransaction:     BigInt!
+  periodStart:            BigInt!
+  periodEnd:              BigInt!
+  totalReward:            BigInt!
+  lastUpdateTime:         BigInt!
+  lastBlockHeight:        BigInt!
+  sumStakes:              BigInt!
+  sumUntakes:             BigInt!
+  sumRewards:             BigInt!
+  totalStakes:            BigInt!
+  totalRewardStakes:      BigInt!
+  totalNormalStakes:      BigInt!
+  totalBoostStakes:       BigInt!
+  rewardRate:             BigInt!
+  rewardPerStakeLast:     BigInt!
+  capMinerBoost:          BigInt!
+  rateBoost:              Int!
+  minerStaked:            Int!
+  MinerTxCounter:         Int!
+  stakeCounter:           Int!
+  unstakeCounter:         Int!
+  rewardClaimCounter:     Int!
+}
+
+type StakingRewardsUser1 @entity {
+  id:                     ID!
+  lastTimeUser:           BigInt!
+  lastBlockHeightUser:    BigInt!
+  sumRewards:             BigInt!
+  totalStakesUser:        BigInt!
+  totalRewardStakesUser:  BigInt!
+  totalNormalStakesUser:  BigInt!
+  totalBoostStakesUser:   BigInt!
+  minerStakedUser:        Int!
+  MinerTxCounterUser:     Int!
+  stakeCounterUser:       Int!
+  unstakeCounterUser:     Int!
+  rewardClaimCounter:     Int!
+}
+
+type StakeTransaction1 @entity {
+  id:                     ID!
+  user:                   String!
+  type:                   String!
+  timeStamp:              BigInt!
+  idTransaction:          BigInt!
+  amountTransaction:      BigInt!
+  totalStakes:            BigInt!
+  totalRewardStakes:      BigInt!
+  totalNormalStakes:      BigInt!
+  totalBoostStakes:       BigInt!
+  minerStakedChange:      Int!
+  totalStakesUser:        BigInt!
+  totalRewardStakesUser:  BigInt!
+  totalNormalStakesUser:  BigInt!
+  totalBoostStakesUser:   BigInt!
+}
+
+type StakingRewardsInfo2 @entity {
+  id:                     ID!
+  counterTransaction:     BigInt!
+  periodStart:            BigInt!
+  periodEnd:              BigInt!
+  totalReward:            BigInt!
+  lastUpdateTime:         BigInt!
+  lastBlockHeight:        BigInt!
+  sumStakes:              BigInt!
+  sumUntakes:             BigInt!
+  sumRewards:             BigInt!
+  totalStakes:            BigInt!
+  totalRewardStakes:      BigInt!
+  totalNormalStakes:      BigInt!
+  totalBoostStakes:       BigInt!
+  rewardRate:             BigInt!
+  rewardPerStakeLast:     BigInt!
+  capMinerBoost:          BigInt!
+  rateBoost:              Int!
+  minerStaked:            Int!
+  MinerTxCounter:         Int!
+  stakeCounter:           Int!
+  unstakeCounter:         Int!
+  rewardClaimCounter:     Int!
+}
+
+type StakingRewardsUser2 @entity {
+  id:                     ID!
+  lastTimeUser:           BigInt!
+  lastBlockHeightUser:    BigInt!
+  sumRewards:             BigInt!
+  totalStakesUser:        BigInt!
+  totalRewardStakesUser:  BigInt!
+  totalNormalStakesUser:  BigInt!
+  totalBoostStakesUser:   BigInt!
+  minerStakedUser:        Int!
+  MinerTxCounterUser:     Int!
+  stakeCounterUser:       Int!
+  unstakeCounterUser:     Int!
+  rewardClaimCounter:     Int!
+}
+
+type StakeTransaction2 @entity {
+  id:                     ID!
+  user:                   String!
+  type:                   String!
+  timeStamp:              BigInt!
+  idTransaction:          BigInt!
+  amountTransaction:      BigInt!
+  totalStakes:            BigInt!
+  totalRewardStakes:      BigInt!
+  totalNormalStakes:      BigInt!
+  totalBoostStakes:       BigInt!
+  minerStakedChange:      Int!
+  totalStakesUser:        BigInt!
+  totalRewardStakesUser:  BigInt!
+  totalNormalStakesUser:  BigInt!
+  totalBoostStakesUser:   BigInt!
+}
+
+type StakingRewardsInfo3 @entity {
+  id:                     ID!
+  counterTransaction:     BigInt!
+  periodStart:            BigInt!
+  periodEnd:              BigInt!
+  totalReward:            BigInt!
+  lastUpdateTime:         BigInt!
+  lastBlockHeight:        BigInt!
+  sumStakes:              BigInt!
+  sumUntakes:             BigInt!
+  sumRewards:             BigInt!
+  totalStakes:            BigInt!
+  totalRewardStakes:      BigInt!
+  totalNormalStakes:      BigInt!
+  totalBoostStakes:       BigInt!
+  rewardRate:             BigInt!
+  rewardPerStakeLast:     BigInt!
+  capMinerBoost:          BigInt!
+  rateBoost:              Int!
+  minerStaked:            Int!
+  MinerTxCounter:         Int!
+  stakeCounter:           Int!
+  unstakeCounter:         Int!
+  rewardClaimCounter:     Int!
+}
+
+type StakingRewardsUser3 @entity {
+  id:                     ID!
+  lastTimeUser:           BigInt!
+  lastBlockHeightUser:    BigInt!
+  sumRewards:             BigInt!
+  totalStakesUser:        BigInt!
+  totalRewardStakesUser:  BigInt!
+  totalNormalStakesUser:  BigInt!
+  totalBoostStakesUser:   BigInt!
+  minerStakedUser:        Int!
+  MinerTxCounterUser:     Int!
+  stakeCounterUser:       Int!
+  unstakeCounterUser:     Int!
+  rewardClaimCounter:     Int!
+}
+
+type StakeTransaction3 @entity {
+  id:                     ID!
+  user:                   String!
+  type:                   String!
+  timeStamp:              BigInt!
+  idTransaction:          BigInt!
+  amountTransaction:      BigInt!
+  totalStakes:            BigInt!
+  totalRewardStakes:      BigInt!
+  totalNormalStakes:      BigInt!
+  totalBoostStakes:       BigInt!
+  minerStakedChange:      Int!
+  totalStakesUser:        BigInt!
+  totalRewardStakesUser:  BigInt!
+  totalNormalStakesUser:  BigInt!
+  totalBoostStakesUser:   BigInt!
+}
