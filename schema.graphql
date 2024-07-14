@@ -313,3 +313,63 @@ type StakeTransaction3 @entity {
   totalNormalStakesUser:  BigInt!
   totalBoostStakesUser:   BigInt!
 }
+
+type GreenPowerInfo @entity {
+  id:                     ID!
+  counterTx:              Int!
+  counterUser:            Int!
+  counterMiner:           Int!
+  counterOffsetTx:        Int!
+  counterOffsetBatchTx:   Int!
+  counterOffsetAction:    Int!
+  counterStakeTx:         Int!
+  counterUnstakeTx:       Int!
+  counterRewardTx:        Int!
+  allOffsetAmount:        BigInt!
+  allStakeAmount:         BigInt!
+  allStakeSum:            BigInt!
+  allUnstakeSum:          BigInt!
+  allRewardAmount:        BigInt!  
+}
+
+type GreenPowerUser @entity {
+  id:                     ID!
+  offsetTxCounter:        Int!
+  offsetActionCounter:    Int!
+  stakeTxCounter:         Int!
+  unstakeTxCounter:       Int!
+  rewardTxCounter:        Int!
+  allOffsetAmount:        BigInt!
+  allStakeAmount:         BigInt!
+  allStakeSum:            BigInt!
+  allUnstakeSum:          BigInt!
+  allRewardAmount:        BigInt!
+  nonce:                  Int!
+}
+
+type GreenPowerMiner @entity {
+  id:                     ID!
+  offsetTxCounter:        Int!
+  stakeTxCounter:         Int!
+  unstakeTxCounter:       Int!
+  allOffsetAmount:        BigInt!
+  allStakeAmount:         BigInt!
+  allStakeSum:            BigInt!
+  allUnstakeSum:          BigInt!
+}
+
+type GreenPowerTx @entity {
+  id:                     ID!
+  blockHash:              String!
+  typeTx:                 String!
+  txid:                   String!
+  txSN:                   Int!
+  greener:                String!
+  minerPower:             String!
+  token:                  String!
+  amount:                 BigInt!
+  offsetBaseIndex:        BigInt!
+  timestampTx:            Int!
+  period:                 Int!
+  nonce:                  Int!
+}
