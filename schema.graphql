@@ -373,3 +373,47 @@ type GreenPowerTx @entity {
   period:                 Int!
   nonce:                  Int!
 }
+
+type GreenBTC20 @entity {
+  id:                     ID!
+  lastBlockHeight:        Int! 
+  domainCount:            Int!
+  actionCount:            Int!
+}
+
+type GreenBTC20Domain @entity {
+  id:                   ID!
+  lastBlockHeight:      Int! 
+  x:                    Int!
+  y:                    Int!
+  w:                    Int!
+  h:                    Int!
+  decimal:              Int!
+  boxLimit:             Int!
+  boxSteps:             Int!
+  chances:              [Int]!
+  chanceSums:           [Int]!
+  wons:                 [Int]!
+  userCount:            Int!
+  actionCount:          Int!
+}
+
+type GreenBT20User @entity {
+  id:                   ID!
+  lastBlockHeight:      Int! 
+  actionCount:          Int!
+  boxAmount:            Int!
+}
+
+type GreenBT20Action @entity {
+  id:                   ID!
+  blockHeight:          Int! 
+  blockHash:            String!
+  greener:              String!
+  actionId:             Int!
+  domainId:             Int!
+  boxStart:             Int!
+  boxCount:             Int!
+  luckyCounter:         [Int]!  
+  wonList:              [Int]!
+}

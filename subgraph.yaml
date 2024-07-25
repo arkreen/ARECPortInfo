@@ -122,6 +122,73 @@ dataSources:
           handler: handleRewardAdded
         - event: SetStakeParameter(uint256,uint256)
           handler: handleSetStakeParameter
+
+  - kind: ethereum/contract
+    name: StakingRewards2
+    network: matic
+    source:
+      address: '0x0A0688fc15794035820CaDc23Db7114bAb4dE405'
+      abi: StakingRewards
+      startBlock: 59783790
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/StakingRewards2.ts
+      entities:
+        - StakingRewardsInfo2
+        - StakingRewardsUser2
+        - StakeTransaction2  
+      abis:
+        - name: StakingRewards
+          file: ./abis/StakingRewards.json
+      eventHandlers:
+        - event: Staked(indexed address,uint256)
+          handler: handleStake
+        - event: Withdrawn(indexed address,uint256)
+          handler: handleWithdrawn
+        - event: RewardPaid(indexed address,uint256)
+          handler: handleStakeRewardPaid
+        - event: RewardStakeUpdated(indexed address,uint256,uint256,uint256)
+          handler: handleRewardStakeUpdated
+        - event: RewardAdded(uint256,uint256,uint256)
+          handler: handleRewardAdded
+        - event: SetStakeParameter(uint256,uint256)
+          handler: handleSetStakeParameter
+
+  - kind: ethereum/contract
+    name: StakingRewards3
+    network: matic
+    source:
+      address: '0x071Bed72c917859e73f99dDa41Fb6B2Ea4C08d33'
+      abi: StakingRewards
+      startBlock: 59785831
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/StakingRewards3.ts
+      entities:
+        - StakingRewardsInfo3
+        - StakingRewardsUser3
+        - StakeTransaction3  
+      abis:
+        - name: StakingRewards
+          file: ./abis/StakingRewards.json
+      eventHandlers:
+        - event: Staked(indexed address,uint256)
+          handler: handleStake
+        - event: Withdrawn(indexed address,uint256)
+          handler: handleWithdrawn
+        - event: RewardPaid(indexed address,uint256)
+          handler: handleStakeRewardPaid
+        - event: RewardStakeUpdated(indexed address,uint256,uint256,uint256)
+          handler: handleRewardStakeUpdated
+        - event: RewardAdded(uint256,uint256,uint256)
+          handler: handleRewardAdded
+        - event: SetStakeParameter(uint256,uint256)
+          handler: handleSetStakeParameter
+
   - kind: ethereum/contract
     name: GreenPower 
     network: matic
@@ -155,4 +222,31 @@ dataSources:
           handler: handleDeposit
         - event: Withdraw(indexed address,indexed address,uint256)
           handler: handleWithdraw
+
+  - kind: ethereum/contract
+    name: GreenBTC2 
+    network: matic
+    source:
+      address: '0x3221F5818A5CF99e09f5BE0E905d8F145935e3E0'
+      abi: GreenBTC2
+      startBlock: 59792225
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/GreenBTC2.ts
+      entities:
+        - GreenBTC20
+        - GreenBTC20Domain
+        - GreenBT20User
+        - GreenBT20Action
+      abis:
+        - name: GreenBTC2
+          file: ./abis/GreenBTC2.json
+      eventHandlers:
+        - event: DomainRegistered(uint256,bytes32)
+          handler: handleDomainRegistered
+        - event: DomainGreenized(address,uint256,uint256,uint256,uint256,uint256)
+          handler: handleDomainGreenized
+
 
