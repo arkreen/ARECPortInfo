@@ -344,6 +344,9 @@ type GreenPowerUser @entity {
   allStakeSum:            BigInt!
   allUnstakeSum:          BigInt!
   allRewardAmount:        BigInt!
+  allDepositSum:          BigInt!
+  allWithdrawSum:         BigInt!
+  offsetAuto:             String!
   nonce:                  Int!
 }
 
@@ -370,7 +373,9 @@ type GreenPowerTx @entity {
   amount:                 BigInt!
   offsetBaseIndex:        BigInt!
   timestampTx:            Int!
+  wonList:                String
   period:                 Int!
+  data:                   String
   nonce:                  Int!
 }
 
@@ -416,75 +421,4 @@ type GreenBT20Action @entity {
   boxCount:             Int!
   luckyCounter:         [Int]!  
   wonList:              [Int]!
-}
-
-type PoolAKREUsdc @entity {
-  id:                   ID!
-  token0:               String! 
-  token1:               String!
-  pool:                 String!
-  fee:                  Int!
-  tickSpacing:          Int!
-  sqrtPriceX96:         BigInt!
-  tickInit:             Int!
-  priceInit:            BigDecimal!
-  lastMintTrx:          String!
-  lastBurnTrx:          String!
-  tickLower:            Int!
-  tickUpper:            Int!
-  liquidity:            BigInt!
-  amount0:              BigInt!
-  amount1:              BigInt!
-}
-
-type PoolPosition @entity {
-  id:                   ID!
-  owner:                String!
-  trxCreation:          String!
-  tickLower:            Int!
-  tickUpper:            Int!
-  addTimes:             Int!
-  decreasetTimes:       Int!
-  collectTimes:         Int!
-  liquidityNet:         BigInt!
-  liquidityAdd:         BigInt!
-  liquidityDecrease:    BigInt!
-  amount0Add:           BigDecimal!
-  amount1Add:           BigDecimal!
-  amount0Collect:       BigDecimal!
-  amount1Collect:       BigDecimal!
-}
-
-type IncreaseInfo @entity {
-  id:                   ID!
-  sender:               String!
-  tokenId:              Int!
-  liquidity:            BigInt!
-  amount0:              BigDecimal!
-  amount1:              BigDecimal!
-}
-
-type DecreaseInfo @entity {
-  id:                   ID!
-  sender:               String!
-  tokenId:              Int!
-  liquidity:            BigInt!
-  amount0:              BigDecimal!
-  amount1:              BigDecimal!
-}
-
-type CollectInfo @entity {
-  id:                   ID!
-  receiver:             String!
-  tokenId:              Int!
-  amount0:              BigDecimal!
-  amount1:              BigDecimal!
-}
-
-type MarketMakerPool @entity {
-  id:                   ID!
-  numPosition:          Int!
-  numAdd:               Int!
-  numDecrease:          Int!
-  numCollet:            Int!
 }
