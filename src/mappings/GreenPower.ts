@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 import { BigInt, Address, Bytes, log, ethereum, ByteArray } from '@graphprotocol/graph-ts'
 import { GreenPowerTx, GreenPowerInfo, GreenPowerUser, GreenPowerMiner } from '../types/schema'
-import { Offset, OffsetAgent, Stake, Unstake, Reward, Deposit, Withdraw, GreenPower } from '../types/GreenPower/GreenPower'
+import { Offset, OffsetAgent, Stake, Unstake, Reward, Deposit, Withdraw, GreenPower, AutoOffsetChanged } from '../types/GreenPower/GreenPower'
 import { crypto } from "@graphprotocol/graph-ts";
 
 export let ZERO_BI = BigInt.fromI32(0)
@@ -31,6 +31,7 @@ export function handleOffset(event: Offset): void {
   if (greenPowerInfo ===null) {
     greenPowerInfo = new GreenPowerInfo("GreenPowerInfo")
     greenPowerInfo.counterTx = 0
+    greenPowerInfo.timestampTxLast = 0
     greenPowerInfo.counterUser = 0
     greenPowerInfo.counterMiner = 0
     greenPowerInfo.counterOffsetTx = 0
@@ -80,7 +81,7 @@ export function handleOffset(event: Offset): void {
   let wonNumer = 0 
 
   let posibility = posibilitySpace.div(rewardRate)                      // (100000 * 20 * (10**8)) / rewardRate;      
-  if (posibilitySpace.minus(posibility.times(rewardRate)).times(BigInt.fromU32(2)).ge(rewardRate)) {
+  if (posibilitySpace.minus(posibility.times(rewardRate)).times(BigInt.fromI32(2)).ge(rewardRate)) {
       posibility = posibility.plus(ONE_BI);
   }
 
@@ -106,12 +107,11 @@ export function handleOffset(event: Offset): void {
       let luckyNumber = crypto.keccak256(plugMinerBytes.concat(greenerBytes)
                                           .concat(baseIndexBytes).concat(blockHashBytes))
 
-//      log.warning("Lucky Data: {}, {}, {}, {} ", [plugMinerBytes.toHexString(), greenerBytes.toHexString(), event.block.hash.toHexString(),
-//              plugMinerBytes.concat(greenerBytes).concat(baseIndexBytes).concat(blockHashBytes).toHexString()])
-      let luckyBN = BigInt.fromByteArray(reverseBytesArray(Bytes.fromByteArray(luckyNumber)));    
+      let luckyBN = BigInt.fromUnsignedBytes(reverseBytesArray(Bytes.fromByteArray(luckyNumber)));   
+      
       if (luckyBN.mod(posibility).lt(BigInt.fromString("100000"))) {
-        if (index != 0) wonList = wonList + ','
-        wonList = wonList + baseIndex.plus(BigInt.fromU32(index)).toString()
+        if (wonList != '') wonList = wonList + ','
+        wonList = wonList + baseIndex.plus(BigInt.fromI32(index)).toString()
         wonNumer += 1
       }
     }
@@ -150,6 +150,7 @@ export function handleOffset(event: Offset): void {
   greenPowerUser.save()
 
   greenPowerInfo.counterTx += 1
+  greenPowerInfo.timestampTxLast = event.block.timestamp.toU32()
   greenPowerInfo.counterOffsetAction += event.params.offsetActions.length
   greenPowerInfo.allOffsetAmount = greenPowerInfo.allOffsetAmount.plus(totalOffsetAmount)
   greenPowerInfo.counterOffsetTx += 1
@@ -161,12 +162,13 @@ export function handleOffset(event: Offset): void {
   greenPowerTx.txid = event.params.txid.toHexString()
   greenPowerTx.txSN = greenPowerInfo.counterTx
   greenPowerTx.greener = event.params.greener.toHexString()
-  greenPowerTx.minerPower = '-'
+  greenPowerTx.minerPower = totalOffsetAmount.toString()
   greenPowerTx.token = event.params.tokenToPay.toHexString()
   greenPowerTx.amount = event.params.stakeAmount
   greenPowerTx.offsetBaseIndex = event.params.offsetBaseIndex
   greenPowerTx.timestampTx = event.block.timestamp.toU32()
   greenPowerTx.wonList = wonList
+  greenPowerTx.data = event.params.txid.toHexString() + '-' + event.params.offsetBaseIndex.toString()
   
   let steps = totalOffsetAmount.div(indexUnit)            // used to save steps
   greenPowerTx.period = steps.toI32()
@@ -181,6 +183,7 @@ export function handleOffsetAgent(event: OffsetAgent): void {
   if (greenPowerInfo ===null) {
     greenPowerInfo = new GreenPowerInfo("GreenPowerInfo")
     greenPowerInfo.counterTx = 0
+    greenPowerInfo.timestampTxLast = 0
     greenPowerInfo.counterUser = 0
     greenPowerInfo.counterMiner = 0
     greenPowerInfo.counterOffsetTx = 0
@@ -269,8 +272,15 @@ export function handleOffsetAgent(event: OffsetAgent): void {
     baseIndex = baseIndex.plus(offsetAmount.div(BigInt.fromString('10').pow(5)))
   }
 
-  let greenPowerTx = new GreenPowerTx(event.transaction.hash.toHexString() + '-' + baseIndex.toString())
-  greenPowerTx.typeTx = "Offset"
+  greenPowerInfo.counterTx += 1
+  greenPowerInfo.timestampTxLast = event.block.timestamp.toU32()
+  greenPowerInfo.counterOffsetAction += offsetActions.length
+  greenPowerInfo.allOffsetAmount = greenPowerInfo.allOffsetAmount.plus(totalOffsetAmount)
+  greenPowerInfo.counterOffsetTx += 1
+  greenPowerInfo.save()
+
+  let greenPowerTx = new GreenPowerTx(event.transaction.hash.toHexString())
+  greenPowerTx.typeTx = "OffsetAgent"
   greenPowerTx.blockHash = event.block.hash.toHexString()
   greenPowerTx.txid = event.params.txid.toHexString()
   greenPowerTx.txSN = greenPowerInfo.counterTx
@@ -280,16 +290,10 @@ export function handleOffsetAgent(event: OffsetAgent): void {
   greenPowerTx.amount = totalOffsetAmount
   greenPowerTx.offsetBaseIndex = baseIndex
   greenPowerTx.timestampTx = event.block.timestamp.toU32()
-  greenPowerTx.data = event.params.baseIndex.toString() + '-' + event.params.steps.toString()
+  greenPowerTx.data = event.params.txid.toHexString() + '-' + event.params.baseIndex.toString()
   greenPowerTx.period = 0
   greenPowerTx.nonce = 0
   greenPowerTx.save()
-
-  greenPowerInfo.counterTx += 1
-  greenPowerInfo.counterOffsetAction += offsetActions.length
-  greenPowerInfo.allOffsetAmount = greenPowerInfo.allOffsetAmount.plus(totalOffsetAmount)
-  greenPowerInfo.counterOffsetTx += 1
-  greenPowerInfo.save()
 
 }
 
@@ -300,6 +304,7 @@ export function handleStake(event: Stake): void {
   if (greenPowerInfo ===null) {
     greenPowerInfo = new GreenPowerInfo("GreenPowerInfo")
     greenPowerInfo.counterTx = 0
+    greenPowerInfo.timestampTxLast = 0
     greenPowerInfo.counterUser = 0
     greenPowerInfo.counterMiner = 0
     greenPowerInfo.counterOffsetTx = 0
@@ -333,6 +338,7 @@ export function handleStake(event: Stake): void {
     greenPowerUser.allDepositSum = ZERO_BI
     greenPowerUser.allWithdrawSum = ZERO_BI
     greenPowerUser.nonce = 0
+    greenPowerUser.offsetAuto = 'N'
     greenPowerUser.save()
 
     greenPowerInfo.counterUser += 1
@@ -356,6 +362,7 @@ export function handleStake(event: Stake): void {
   }
 
   greenPowerInfo.counterTx += 1
+  greenPowerInfo.timestampTxLast = event.block.timestamp.toU32()
   greenPowerInfo.counterStakeTx += 1
   greenPowerInfo.allStakeAmount = greenPowerInfo.allStakeAmount.plus(event.params.amount)
   greenPowerInfo.allStakeSum = greenPowerInfo.allStakeSum.plus(event.params.amount)
@@ -372,6 +379,10 @@ export function handleStake(event: Stake): void {
   greenPowerTx.amount = event.params.amount
   greenPowerTx.offsetBaseIndex = ZERO_BI
   greenPowerTx.timestampTx = event.block.timestamp.toU32()
+  greenPowerTx.data = greenPowerTx.txid + '-' + greenPowerTx.greener + '-' + greenPowerTx.minerPower + '-'
+                      + greenPowerTx.amount.toString() + '-' 
+                      + event.params.period.toString() + '-' + event.params.nonce.toString()
+
   greenPowerTx.period = event.params.period.toU32()
   greenPowerTx.nonce = event.params.nonce.toU32()
   greenPowerTx.save()
@@ -396,6 +407,7 @@ export function handleStake(event: Stake): void {
 export function handleUnstake(event: Unstake): void {
   let greenPowerInfo = GreenPowerInfo.load("GreenPowerInfo")!
   greenPowerInfo.counterTx += 1
+  greenPowerInfo.timestampTxLast = event.block.timestamp.toU32()
   greenPowerInfo.counterUnstakeTx += 1
   greenPowerInfo.allStakeAmount = greenPowerInfo.allStakeAmount.minus(event.params.amount)
   greenPowerInfo.allUnstakeSum = greenPowerInfo.allUnstakeSum.plus(event.params.amount)
@@ -412,6 +424,9 @@ export function handleUnstake(event: Unstake): void {
   greenPowerTx.amount = event.params.amount
   greenPowerTx.offsetBaseIndex = ZERO_BI
   greenPowerTx.timestampTx = event.block.timestamp.toU32()
+  greenPowerTx.data = greenPowerTx.txid + '-' + greenPowerTx.greener + '-' + greenPowerTx.minerPower + '-'
+                      + greenPowerTx.amount.toString() + '-' + event.params.nonce.toString()
+
   greenPowerTx.period = 0
   greenPowerTx.nonce = event.params.nonce.toU32()
   greenPowerTx.save()
@@ -438,6 +453,7 @@ export function handleUnstake(event: Unstake): void {
 export function handleReward(event: Reward): void {
   let greenPowerInfo = GreenPowerInfo.load("GreenPowerInfo")!
   greenPowerInfo.counterTx += 1
+  greenPowerInfo.timestampTxLast = event.block.timestamp.toU32()
   greenPowerInfo.counterRewardTx += 1
   greenPowerInfo.allRewardAmount = greenPowerInfo.allRewardAmount.plus(event.params.amount)
   greenPowerInfo.save()
@@ -453,6 +469,9 @@ export function handleReward(event: Reward): void {
   greenPowerTx.amount = event.params.amount
   greenPowerTx.offsetBaseIndex = ZERO_BI
   greenPowerTx.timestampTx = event.block.timestamp.toU32()
+  greenPowerTx.data = greenPowerTx.txid + '-' + greenPowerTx.greener + '-'
+                      + greenPowerTx.amount.toString() + '-' + event.params.nonce.toString()
+
   greenPowerTx.period = 0
   greenPowerTx.nonce = event.params.nonce.toU32()
   greenPowerTx.save()
@@ -474,6 +493,7 @@ export function handleDeposit(event: Deposit): void {
   if (greenPowerInfo ===null) {
     greenPowerInfo = new GreenPowerInfo("GreenPowerInfo")
     greenPowerInfo.counterTx = 0
+    greenPowerInfo.timestampTxLast = 0
     greenPowerInfo.counterUser = 0
     greenPowerInfo.counterMiner = 0
     greenPowerInfo.counterOffsetTx = 0
@@ -491,6 +511,7 @@ export function handleDeposit(event: Deposit): void {
     greenPowerInfo.save()
   } 
   greenPowerInfo.counterTx += 1
+  greenPowerInfo.timestampTxLast = event.block.timestamp.toU32()
   greenPowerInfo.save()
 
   let greenPowerTx = new GreenPowerTx(event.transaction.hash.toHexString())
@@ -546,6 +567,7 @@ export function handleWithdraw(event: Withdraw): void {
 
   let greenPowerInfo = GreenPowerInfo.load("GreenPowerInfo")!
   greenPowerInfo.counterTx += 1
+  greenPowerInfo.timestampTxLast = event.block.timestamp.toU32()
   greenPowerInfo.save()
 
   let greenPowerTx = new GreenPowerTx(event.transaction.hash.toHexString())
@@ -570,3 +592,55 @@ export function handleWithdraw(event: Withdraw): void {
   greenPowerUser.save()
 }
 
+// event AutoOffsetChanged(address indexed user, bool ifAuto);
+export function handleAutoOffsetChanged(event: AutoOffsetChanged): void {
+  let greenPowerInfo = GreenPowerInfo.load("GreenPowerInfo")!
+  greenPowerInfo.counterTx += 1
+  greenPowerInfo.timestampTxLast = event.block.timestamp.toU32()
+  greenPowerInfo.save()
+
+  let greenPowerTx = new GreenPowerTx(event.transaction.hash.toHexString())
+  greenPowerTx.typeTx = "AutoOffsetChanged"
+  greenPowerTx.blockHash = '-'
+  greenPowerTx.txid = "-"
+  greenPowerTx.txSN = greenPowerInfo.counterTx
+  greenPowerTx.greener = event.params.user.toHexString()
+  greenPowerTx.minerPower = "-"
+  greenPowerTx.token = '-'
+  greenPowerTx.amount = ZERO_BI
+  greenPowerTx.offsetBaseIndex = ZERO_BI
+  greenPowerTx.timestampTx = event.block.timestamp.toU32()
+  greenPowerTx.data = event.params.user.toHexString() + '-' + event.params.ifAuto.toString()
+  greenPowerTx.period = 0
+  greenPowerTx.nonce = 0
+
+  greenPowerTx.save()
+
+  let greenPowerUser = GreenPowerUser.load(event.params.user.toHexString())
+  if (greenPowerUser ===null) {
+    greenPowerUser = new GreenPowerUser(event.params.user.toHexString())
+    greenPowerUser.offsetTxCounter = 0
+    greenPowerUser.offsetActionCounter = 0
+    greenPowerUser.stakeTxCounter = 0
+    greenPowerUser.unstakeTxCounter = 0
+    greenPowerUser.rewardTxCounter = 0
+    greenPowerUser.allOffsetAmount = ZERO_BI
+    greenPowerUser.allStakeAmount = ZERO_BI
+    greenPowerUser.allStakeSum = ZERO_BI
+    greenPowerUser.allUnstakeSum = ZERO_BI
+    greenPowerUser.allRewardAmount = ZERO_BI
+    greenPowerUser.allDepositSum = ZERO_BI
+    greenPowerUser.allWithdrawSum = ZERO_BI
+    greenPowerUser.offsetAuto = 'N'
+    greenPowerUser.nonce = 0
+    greenPowerUser.save()
+
+    greenPowerInfo.counterUser += 1
+    greenPowerInfo.save()
+  }
+
+  if(event.params.ifAuto) {
+    greenPowerUser.offsetAuto = 'Y'
+  }
+  greenPowerUser.save()
+}
