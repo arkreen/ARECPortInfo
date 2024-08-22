@@ -12,8 +12,10 @@
 
 ### Deploy
 
-`graph deploy --product hosted-service lu-derik/arec-port`
+`graph deploy --product hosted-service lu-derik/arec-port`  (deprecated)
 
-`npx graph deploy --product hosted-service lu-derik/arec-port`
+`npx graph deploy --product hosted-service lu-derik/arec-port`  (deprecated)
 
-`npx graph deploy --product hosted-service lu-derik/arec-port-celo`
+`npx graph deploy --product hosted-service lu-derik/arec-port-celo` (deprecated)
+
+`npx graph deploy arec-port-celo-alfajores`
