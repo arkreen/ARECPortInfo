@@ -224,6 +224,8 @@ dataSources:
           handler: handleWithdraw
         - event: OffsetAgent(indexed address,uint256,uint256)
           handler: handleOffsetAgent
+        - event: AutoOffsetChanged(indexed address,bool)
+          handler: handleAutoOffsetChanged
 
   - kind: ethereum/contract
     name: GreenBTC2 

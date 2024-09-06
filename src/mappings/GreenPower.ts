@@ -476,7 +476,29 @@ export function handleReward(event: Reward): void {
   greenPowerTx.nonce = event.params.nonce.toU32()
   greenPowerTx.save()
 
-  let greenPowerUser = GreenPowerUser.load(event.params.greener.toHexString())!
+  let greenPowerUser = GreenPowerUser.load(event.params.greener.toHexString())
+  if (greenPowerUser ===null) {
+    greenPowerUser = new GreenPowerUser(event.params.greener.toHexString())
+    greenPowerUser.offsetTxCounter = 0
+    greenPowerUser.offsetActionCounter = 0
+    greenPowerUser.stakeTxCounter = 0
+    greenPowerUser.unstakeTxCounter = 0
+    greenPowerUser.rewardTxCounter = 0
+    greenPowerUser.allOffsetAmount = ZERO_BI
+    greenPowerUser.allStakeAmount = ZERO_BI
+    greenPowerUser.allStakeSum = ZERO_BI
+    greenPowerUser.allUnstakeSum = ZERO_BI
+    greenPowerUser.allRewardAmount = ZERO_BI
+    greenPowerUser.allDepositSum = ZERO_BI
+    greenPowerUser.allWithdrawSum = ZERO_BI
+    greenPowerUser.nonce = 0
+    greenPowerUser.offsetAuto = 'N'
+    greenPowerUser.save()
+
+    greenPowerInfo.counterUser += 1
+    greenPowerInfo.save()
+  }
+
   greenPowerUser.rewardTxCounter += 1
   greenPowerUser.allRewardAmount = greenPowerUser.allRewardAmount.plus(event.params.amount)
   if (greenPowerUser.nonce != event.params.nonce.toU32()) {
