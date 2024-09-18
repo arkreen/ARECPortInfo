@@ -423,3 +423,32 @@ type GreenBT20Action @entity {
   luckyCounter:         [Int]!  
   wonList:              [Int]!
 }
+
+type PlugOverview @entity {
+  id:                     ID!
+  numBuyTx:               Int!
+  totalMinersBought:      Int!
+  numRefundTx:            Int!
+  totalMinersBurned:      Int!
+}
+
+type PlugMinerTx @entity {
+  id:                     ID!
+  hashTx:                 String!
+  owner:                  String!
+  tokenPay:               String!
+  amountPay:              BigInt!
+  tokenGet:               String!
+  amountGet:              BigInt!
+  actionType:             String!
+  buyOrRefund:            String!
+  quantity:               Int!
+}
+
+type TokenOverview @entity {
+  id:                     ID!
+  allbought:              BigInt!
+  allWithdrawn:           BigInt!
+  alldeposited:           BigInt!
+  allRewarded:            BigInt!
+}

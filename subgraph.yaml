@@ -252,3 +252,32 @@ dataSources:
           handler: handleDomainRegistered
         - event: DomainGreenized(address,uint256,uint256,uint256,uint256,uint256)
           handler: handleDomainGreenized
+
+  - kind: ethereum/contract
+    name: PlugMinerSales  
+    network: matic
+    source:
+      address: '0x8E0b81E8400FF35B7A1af36A2031AeaD166D1594'
+      abi: PlugMinerSales
+      startBlock: 61964358
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/PlugMinerSales.ts
+      entities:
+        - PlugOverview
+        - PlugMinerTx
+        - TokenOverview
+      abis:
+        - name: PlugMinerSales
+          file: ./abis/PlugMinerSales.json
+      eventHandlers:
+        - event: ActionPlugMiner(indexed address,indexed address,bytes32,uint256,uint256)
+          handler: handlePlugMiner
+        - event: Deposit(indexed address,uint256)
+          handler: handleDeposit
+        - event: Remove(indexed address,uint256)
+          handler: handleRemove
+        - event: Withdraw(indexed address,uint256)
+          handler: handleWithdraw          
