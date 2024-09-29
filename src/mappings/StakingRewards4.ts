@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 import { BigInt, Address } from '@graphprotocol/graph-ts'
-import { StakingRewardsInfo3, StakingRewardsUser3, StakeTransaction3 } from '../types/schema'
+import { StakingRewardsInfo4, StakingRewardsUser4, StakeTransaction4 } from '../types/schema'
 import { Staked, Withdrawn, RewardPaid, StakingRewards, RewardStakeUpdated } from '../types/StakingRewards/StakingRewards'
 import { SetStakeParameter, RewardAdded } from '../types/StakingRewards/StakingRewards'
 
@@ -15,18 +15,18 @@ const DefaultPremiumRate = 200
 
 // event Staked(address indexed user, uint256 amount);
 export function handleStake(event: Staked): void {
-  let stakeTransaction = StakeTransaction3.load(event.transaction.hash.toHexString())!
+  let stakeTransaction = StakeTransaction4.load(event.transaction.hash.toHexString())!
   stakeTransaction.type = "Stake"
   stakeTransaction.amountTransaction = event.params.amount
   stakeTransaction.save()
 
-  let stakingRewardsInfo = StakingRewardsInfo3.load("StakingRewardsInfo3")!
+  let stakingRewardsInfo = StakingRewardsInfo4.load("StakingRewardsInfo4")!
   stakingRewardsInfo.sumStakes = stakingRewardsInfo.sumStakes.plus(event.params.amount)
   stakingRewardsInfo.MinerTxCounter = stakingRewardsInfo.MinerTxCounter - 1
   stakingRewardsInfo.stakeCounter = stakingRewardsInfo.stakeCounter + 1
   stakingRewardsInfo.save()
 
-  let stakingRewardsUser = StakingRewardsUser3.load(event.params.user.toHexString())!
+  let stakingRewardsUser = StakingRewardsUser4.load(event.params.user.toHexString())!
 
   stakingRewardsUser.MinerTxCounterUser = stakingRewardsUser.MinerTxCounterUser - 1
   stakingRewardsUser.stakeCounterUser = stakingRewardsUser.stakeCounterUser + 1
@@ -35,18 +35,18 @@ export function handleStake(event: Staked): void {
 
 // event Withdrawn(address indexed user, uint256 amount);
 export function handleWithdrawn(event: Withdrawn): void {
-  let stakeTransaction = StakeTransaction3.load(event.transaction.hash.toHexString())!
+  let stakeTransaction = StakeTransaction4.load(event.transaction.hash.toHexString())!
   stakeTransaction.type = "Unstake"
   stakeTransaction.amountTransaction = event.params.amount
   stakeTransaction.save()
 
-  let stakingRewardsInfo = StakingRewardsInfo3.load("StakingRewardsInfo3")!
+  let stakingRewardsInfo = StakingRewardsInfo4.load("StakingRewardsInfo4")!
   stakingRewardsInfo.sumUntakes = stakingRewardsInfo.sumUntakes.plus(event.params.amount)
   stakingRewardsInfo.MinerTxCounter = stakingRewardsInfo.MinerTxCounter - 1
   stakingRewardsInfo.unstakeCounter = stakingRewardsInfo.unstakeCounter + 1
   stakingRewardsInfo.save()
 
-  let stakingRewardsUser = StakingRewardsUser3.load(event.params.user.toHexString())!
+  let stakingRewardsUser = StakingRewardsUser4.load(event.params.user.toHexString())!
 
   stakingRewardsUser.MinerTxCounterUser = stakingRewardsUser.MinerTxCounterUser - 1
   stakingRewardsUser.unstakeCounterUser = stakingRewardsUser.unstakeCounterUser + 1
@@ -58,18 +58,18 @@ export function handleStakeRewardPaid(event: RewardPaid): void {
 
   let stakerUser = event.params.user.toHexString()
 
-  let stakingRewardsInfo = StakingRewardsInfo3.load("StakingRewardsInfo3")!
+  let stakingRewardsInfo = StakingRewardsInfo4.load("StakingRewardsInfo4")!
   stakingRewardsInfo.counterTransaction = stakingRewardsInfo.counterTransaction.plus(ONE_BI)
   stakingRewardsInfo.sumRewards = stakingRewardsInfo.sumRewards.plus(event.params.reward)
   stakingRewardsInfo.rewardClaimCounter = stakingRewardsInfo.rewardClaimCounter + 1
   stakingRewardsInfo.save()
 
-  let stakingRewardsUser = StakingRewardsUser3.load(stakerUser)!
+  let stakingRewardsUser = StakingRewardsUser4.load(stakerUser)!
   stakingRewardsUser.sumRewards = stakingRewardsUser.sumRewards.plus(event.params.reward)
   stakingRewardsUser.rewardClaimCounter = stakingRewardsUser.rewardClaimCounter + 1
   stakingRewardsUser.save()
 
-  let stakeTransaction = new StakeTransaction3(event.transaction.hash.toHexString())
+  let stakeTransaction = new StakeTransaction4(event.transaction.hash.toHexString())
   stakeTransaction.user = stakerUser
   stakeTransaction.type = "ClaimReward"
   stakeTransaction.timeStamp = event.block.timestamp
@@ -93,9 +93,9 @@ export function handleStakeRewardPaid(event: RewardPaid): void {
 // event RewardAdded(uint256 startTime, uint256 endTime, uint256 reward);
 export function handleRewardAdded(event: RewardAdded): void {
 
-  let stakingRewardsInfo = StakingRewardsInfo3.load("StakingRewardsInfo3")
+  let stakingRewardsInfo = StakingRewardsInfo4.load("StakingRewardsInfo4")
   if (stakingRewardsInfo === null) {
-    stakingRewardsInfo = new StakingRewardsInfo3("StakingRewardsInfo3")
+    stakingRewardsInfo = new StakingRewardsInfo4("StakingRewardsInfo4")
    
     stakingRewardsInfo.counterTransaction = ZERO_BI
     stakingRewardsInfo.periodStart = ZERO_BI
@@ -138,9 +138,9 @@ export function handleRewardAdded(event: RewardAdded): void {
 
 // event SetStakeParameter(uint256 newPremiumCap, uint256 newPremiumRate);
 export function handleSetStakeParameter(event: SetStakeParameter): void {
-  let stakingRewardsInfo = StakingRewardsInfo3.load("StakingRewardsInfo3")
+  let stakingRewardsInfo = StakingRewardsInfo4.load("StakingRewardsInfo4")
   if (stakingRewardsInfo === null) {
-    stakingRewardsInfo = new StakingRewardsInfo3("StakingRewardsInfo3")
+    stakingRewardsInfo = new StakingRewardsInfo4("StakingRewardsInfo4")
 
     stakingRewardsInfo.counterTransaction = ZERO_BI    
     stakingRewardsInfo.periodStart = ZERO_BI
@@ -181,9 +181,9 @@ export function handleRewardStakeUpdated(event: RewardStakeUpdated): void {
 
   let stakingRewards = StakingRewards.bind(Address.fromString(Staking_Rewards_Address))
 
-  let stakingRewardsInfo = StakingRewardsInfo3.load("StakingRewardsInfo3")
+  let stakingRewardsInfo = StakingRewardsInfo4.load("StakingRewardsInfo4")
   if (stakingRewardsInfo === null) {
-    stakingRewardsInfo = new StakingRewardsInfo3("StakingRewardsInfo3")
+    stakingRewardsInfo = new StakingRewardsInfo4("StakingRewardsInfo4")
     
     stakingRewardsInfo.counterTransaction = ZERO_BI
     stakingRewardsInfo.periodStart = ZERO_BI
@@ -215,10 +215,10 @@ export function handleRewardStakeUpdated(event: RewardStakeUpdated): void {
   }
 
   let stakerUser = event.params.user.toHexString()
-  let stakingRewardsUser = StakingRewardsUser3.load(stakerUser)
+  let stakingRewardsUser = StakingRewardsUser4.load(stakerUser)
 
   if (stakingRewardsUser === null) {
-    stakingRewardsUser = new StakingRewardsUser3(stakerUser)
+    stakingRewardsUser = new StakingRewardsUser4(stakerUser)
 
     stakingRewardsUser.lastTimeUser = ZERO_BI
     stakingRewardsUser.lastBlockHeightUser = ZERO_BI
@@ -286,7 +286,7 @@ export function handleRewardStakeUpdated(event: RewardStakeUpdated): void {
   stakingRewardsInfo.MinerTxCounter = stakingRewardsInfo.MinerTxCounter + 1
   stakingRewardsInfo.save()
 
-  let stakeTransaction = new StakeTransaction3(event.transaction.hash.toHexString())
+  let stakeTransaction = new StakeTransaction4(event.transaction.hash.toHexString())
   
   stakeTransaction.user = stakerUser
   stakeTransaction.type = "MinerOnboard"
