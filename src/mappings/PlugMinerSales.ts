@@ -80,6 +80,15 @@ export function handlePlugMiner(event: ActionPlugMiner): void {
 // Deposit(indexed address,uint256)
 export function handleDeposit(event: Deposit): void {
   let tokenOverview  = TokenOverview.load(event.params.token.toHexString())!
+  if (tokenOverview == null) {
+    tokenOverview  = new TokenOverview(event.params.token.toHexString())
+    tokenOverview.allbought = ZERO_BI
+    tokenOverview.allWithdrawn = ZERO_BI
+    tokenOverview.alldeposited = ZERO_BI
+    tokenOverview.allRewarded = ZERO_BI
+    tokenOverview.save()
+  }
+  
   tokenOverview.alldeposited = tokenOverview.alldeposited.plus(event.params.amount)
   tokenOverview.save()
 }
